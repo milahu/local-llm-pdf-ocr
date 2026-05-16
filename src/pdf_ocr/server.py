@@ -108,6 +108,7 @@ async def process_pdf(file: UploadFile = File(...), client_id: str = Form(...)):
         )
 
         # Save per-page raw LLM text so the UI's "View Text" preview can fetch it.
+        # FIXME also write text positions to JSON
         text_path = os.path.join(tempfile.gettempdir(), f"text_{client_id}.json")
         with open(text_path, "w", encoding="utf-8") as f:
             json.dump({str(k): v for k, v in pages_text.items()}, f, ensure_ascii=False)
