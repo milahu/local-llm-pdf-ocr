@@ -452,6 +452,8 @@ class PDFHandler:
                             new_page, rect_coords, text, width, height
                         )
                         prev_rect_coords = rect_coords
+                    # add "\n" after last "</span>"
+                    new_doc.write(f'\n')
                     new_doc.write(f'</div>\n')
                 return
                 # TODO remove
@@ -704,4 +706,5 @@ def _page_insert_textbox_html(
     for key, val in attrs.items():
         val_str = json.dumps(val, separators=(',', ':'))
         attrs_str += f' {key}={val_str!r}'
-    page.write(f'<span class="line" style="{line_style}"{attrs_str}\n>{text}</span>\n')
+    # NOTE no "\n" after "</span>"
+    page.write(f'<span class="line" style="{line_style}"{attrs_str}\n>{text}</span>')
